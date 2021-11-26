@@ -41,6 +41,14 @@ public class UserModel implements Serializable{
         this.crDateTime = cDateTime;
     }
 
+    public UserModel(String firstName, String lastName, String userName, int phNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userName = userName;
+        this.phNumber = phNumber;
+    }
+
+    
     public String getFirstName() {
         return firstName;
     }

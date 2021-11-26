@@ -8,23 +8,40 @@ public class AdminModel implements Serializable{
     private String adminName;
     private int phNumber;
     private String password;
-    private String Role;
+    private String adRole;
     private Boolean state;
     private String crDateTime, upDateTime, updateBy;
 
     public AdminModel() {
     }
 
+    public AdminModel(String adminName, int phNumber, String adRole) {
+        this.adminName = adminName;
+        this.phNumber = phNumber;
+        this.adRole = adRole;
+    }
+
+    
     public AdminModel(String adminName, int pNumber, String password, String Role, Boolean state, String cDateTime, String uDateTime, String updateBy) {
         this.adminName = adminName;
         this.phNumber = pNumber;
         this.password = password;
-        this.Role = Role;
+        this.adRole = Role;
         this.state = state;
         this.crDateTime = cDateTime;
         this.upDateTime = uDateTime;
         this.updateBy = updateBy;
     }
+
+    public AdminModel(String adminName, int phNumber, String password, String adRole, String crDateTime, String updateBy) {
+        this.adminName = adminName;
+        this.phNumber = phNumber;
+        this.password = password;
+        this.adRole = adRole;
+        this.crDateTime = crDateTime;
+        this.updateBy = updateBy;
+    }
+    
 
     public String getAdminName() {
         return adminName;
@@ -50,12 +67,12 @@ public class AdminModel implements Serializable{
         this.password = password;
     }
 
-    public String getRole() {
-        return Role;
+    public String getAdRole() {
+        return adRole;
     }
 
-    public void setRole(String Role) {
-        this.Role = Role;
+    public void setAdRole(String adRole) {
+        this.adRole = adRole;
     }
 
     public Boolean getState() {
@@ -92,7 +109,7 @@ public class AdminModel implements Serializable{
 
     @Override
     public String toString() {
-        return "AdminModel{" + "adminName=" + adminName + ", pNumber=" + phNumber + ", password=" + password + ", Role=" + Role + ", state=" + state + ", cDateTime=" + crDateTime + ", uDateTime=" + upDateTime + ", updateBy=" + updateBy + '}';
+        return "AdminModel{" + "adminName=" + adminName + ", pNumber=" + phNumber + ", password=" + password + ", Role=" + adRole + ", state=" + state + ", cDateTime=" + crDateTime + ", uDateTime=" + upDateTime + ", updateBy=" + updateBy + '}';
     }
 
 }

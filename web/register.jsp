@@ -27,7 +27,7 @@
                <p id="mid">  ${message} </p>
             </div>
             
-               <s:form action="register">
+            <s:form action="register">
             <div class="mb-3">
                 <s:label cssClass="form-label"  value="User Name"/>
                 <s:textfield cssClass="form-control" placeholder="Enter Last Name" name="userName"/>

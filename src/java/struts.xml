@@ -8,6 +8,7 @@ Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
         <action name="*" class="com.example.action.LoginAction">  
             <result name="success" type="redirect">/userPage.jsp </result>  
             <result name="admin" type="redirect">/adminPage.jsp </result>  
+            <result name="user" type="redirect">/userPage.jsp </result>  
             <result name="login">/login.jsp</result> 
         </action>
         
@@ -37,6 +38,8 @@ Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
 
         <action name="getUser" class="com.example.action.UserPageAction">  
             <result name="success" type="httpheader" > </result>
+            <result name="login" type="redirect">/login.jsp</result>
+            <result name="admin" type="redirect">/adminPage.jsp</result>
             <result name="error" type="redirect">/login.jsp</result>
         </action> 
         
@@ -50,12 +53,33 @@ Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
             <result name="error" >/error.jsp </result>
         </action>  
         
+        <action name="getAllCustomers" class="com.example.action.UserPageAction" method="getAllCustomers">  
+            <result name="success" type="httpheader" > </result>  
+            <result name="error" >/error.jsp </result>
+        </action> 
+        
+        <action name="deleteUser" class="com.example.action.UserPageAction" method="deleteUser">  
+            <result name="success" type="httpheader" > </result>  
+            <result name="error" >/error.jsp </result>
+        </action> 
+        
+        <action name="getCustomerDetails" class="com.example.action.UserPageAction" method="getCustomerDetails">  
+            <result name="success" type="httpheader" > </result>  
+            <result name="error" type="redirect" >/error.jsp </result>
+        </action> 
+        
+        <action name="editUserDetails" class="com.example.action.UserPageAction" method="editUserDetails">  
+            <result name="success" type="httpheader" > </result>  
+            <result name="error" type="redirect" >/error.jsp </result>
+        </action> 
     </package>    
     
     <package name="adminpage" namespace="/adminPage" extends="struts-default"> 
 
         <action name="getAdmin" class="com.example.action.AdminPageAction">  
             <result name="success" type="httpheader" > </result>
+            <result name="login" type="redirect">/login.jsp</result>
+            <result name="user" type="redirect">/userPage.jsp</result>
             <result name="error" type="redirect">/login.jsp</result>
         </action> 
         
@@ -84,6 +108,25 @@ Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
             <result name="error" >/error.jsp </result>
         </action> 
         
+        <action name="getAllAdmin" class="com.example.action.AdminPageAction" method="getAllAdmin">  
+            <result name="success" type="httpheader" > </result>  
+            <result name="error" >/error.jsp </result>
+        </action>
+        
+        <action name="deleteAdmin" class="com.example.action.AdminPageAction" method="deleteAdmin">  
+            <result name="success" type="httpheader" > </result>  
+            <result name="error" >/error.jsp </result>
+        </action> 
+        
+        <action name="addNewAdmin" class="com.example.action.AdminPageAction" method="addNewAdmin">  
+            <result name="success" type="httpheader" > </result>  
+            <result name="error" >/error.jsp </result>
+        </action> 
+        
+        <action name="editAdminDetails" class="com.example.action.AdminPageAction" method="editAdminDetails">  
+            <result name="success" type="httpheader" > </result>  
+            <result name="error" >/error.jsp </result>
+        </action> 
         
     </package>
     

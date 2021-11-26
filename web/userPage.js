@@ -64,6 +64,11 @@ $(document).ready(function () {
             });
         }
     });
+    
+    $('#editUserId').click(function () {
+        $('#exampleModalLabel').html("View My Profile");
+        clickEditUserProfile();
+    });
 
 });
 
@@ -179,7 +184,7 @@ function buildOrderTable() {
                         "<td>" + dt.upDateTime + "</td>" +
                         "<td> Send </td>" +
                         "<td >" + dt.quantity + "</td>" +
-                        "<td></td>"+ 
+                        "<td><i class='fas fa-thumbs-up' style='color:gray; font-size:30px; margin:5px;'>  </i></td>"+ 
                         "</tr>"
                         );
             }
@@ -321,6 +326,108 @@ function uPriceGetById(idd) {
         }
     });
     return uPrice;
+}
+
+function clickEditUserProfile(){
+        $.ajax({
+            type: "GET",
+            async: true,
+            url: "userPage/getCustomerDetails",
+            data: {"userName": loger},
+            success: function (data) {
+                var customer = data["customer"];
+                if (customer) {
+                    $("#exampleModal1").modal('show');
+                     $('.modal-body').empty();
+                $('.modal-body').append(
+                        "<table class='table table-striped'> " +
+                        "<thead><tr><th scope='col'> </th>" +
+                        "<th scope='col'> User Name </th>" +
+                        "<th scope='col'> First Name </th>" +
+                        "<th scope='col'> Last Name</th>" +
+                        "<th scope='col'> Phone Number </th>" +
+                        "<th scope='col'> Action </th>" +
+                        "</tr></thead><tbody >");
+                customer.forEach(function (dt) {
+                    $('.modal-body tbody:last').append(
+                            "<tr id='userDetails" + dt.userName + "'><td scope='row'></td>" +
+                            "<td>" +
+                            "<p>" + dt.userName + "</p>" +
+                            "<input id=inputUserName class='d-none'   style='width: 100px;' value='" + dt.userName + "' >" +
+                            "</td>" +
+                            "<td>" +
+                            "<p>" + dt.firstName + "</p>" +
+                            "<input id=inputfName class='d-none'   style='width: 100px;' value='" + dt.firstName + "' >" +
+                            "</td>" +
+                            "<td>" +
+                            "<p>" + dt.lastName + "</p>" +
+                            "<input id=inputlName class='d-none'  style='width: 100px;' value='" + dt.lastName + "' >" +
+                            "</td>" +
+                            "<td>" +
+                            "<p>" + dt.phNumber + "</p>" +
+                            "<input id=inputNum class='d-none' type='number' min=0 style='width: 100px;' value=" + dt.phNumber + " >" +
+                            "</td> <td>" +
+                            "<i id=Donebtn onclick= (clickEdituserDone('" + dt.userName + "')) class='fas fa-check-square d-none' style='color:green; font-size:30px; margin:5px;'></i>" +
+                            "<i id=Closebtn onclick=(clickEditCloseUser('" + dt.userName + "')) class='fas fa-window-close d-none' style='color:maroon; font-size:30px; margin:5px;'></i>" +
+                            "<i id=EditUserbtn onclick= (clickEditUser('" + dt.userName + "')) class='fas fa-pen-square' style='color:green; font-size:30px; margin:5px;'></i>" +
+                            "</td></tr>"
+                            );
+                });
+                $('.modal-body tbody:last').after(
+                        "</tbody></table>");
+
+                }else{
+                    $("#exampleModal1").modal('hide');
+                    message = "Data Not Found";
+                    show("alert-warning");
+                }
+            },
+            error: function (request, error) {
+                console.log(arguments);
+                alert(" Can't do because: " + error);
+            }
+        });
+}
+
+function clickEditUser(userName) {
+    $("#userDetails" + userName).children('td').children('p').addClass('d-none');
+    $("#userDetails" + userName).children('td').children('input').removeClass('d-none');
+    $("#userDetails" + userName).children('td').children('#EditUserbtn').addClass('d-none');
+    $("#userDetails" + userName).children('td').children('#Donebtn').removeClass('d-none');
+    $("#userDetails" + userName).children('td').children('#Closebtn').removeClass('d-none');
+}
+
+function clickEditCloseUser(userName) {
+    $("#userDetails" + userName).children('td').children('p').removeClass('d-none');
+    $("#userDetails" + userName).children('td').children('input').addClass('d-none');
+    $("#userDetails" + userName).children('td').children('#EditUserbtn').removeClass('d-none');
+    $("#userDetails" + userName).children('td').children('#Donebtn').addClass('d-none');
+    $("#userDetails" + userName).children('td').children('#Closebtn').addClass('d-none');
+}
+function clickEdituserDone(userName) {
+    
+    var uName =  $("#userDetails" + userName).children('td').children("#inputUserName").val();
+    var fName =  $("#userDetails" + userName).children('td').children("#inputfName").val();
+    var lName = $("#userDetails" + userName).children('td').children("#inputlName").val();
+    var phNumber = $("#userDetails" + userName).children('td').children("#inputNum").val();
+    $.ajax({
+        type: "GET",
+        async: true,
+        url: "userPage/editUserDetails",
+        data: {"updateBy": loger,"usName": userName,  "userName": uName, "firstName": fName, "lastName": lName,
+            "phNumber": phNumber},
+        success: function (data) {
+            message = data["message"];
+            $("#exampleModal1").modal('hide');
+            show("alert-info");
+
+        },
+        error: function (request, error) {
+            console.log(arguments);
+            alert(" Can't do because: " + error);
+        }
+    });
+
 }
 
 function show(color) {

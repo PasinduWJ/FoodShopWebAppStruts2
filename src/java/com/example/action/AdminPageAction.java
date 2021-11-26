@@ -1,10 +1,15 @@
 
 package com.example.action;
 
+import com.example.dao.AdminDao;
 import com.example.dao.FoodDao;
 import com.example.dao.OrderDao;
+import com.example.dao.UserDao;
+import com.example.model.AdminModel;
 import com.example.model.FoodModel;
+import com.example.model.UserModel;
 import com.example.util.DateTimeSetting;
+import com.example.util.PasswordEncrypt;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import static com.opensymphony.xwork2.Action.ERROR;
@@ -21,6 +26,7 @@ import org.apache.struts2.ServletActionContext;
 public class AdminPageAction extends ActionSupport implements ModelDriven<FoodModel>{
 
     private FoodModel fModel = new FoodModel();
+    private AdminModel adModel =new AdminModel();
     private String adminName;
     private String message;
 
@@ -31,11 +37,19 @@ public class AdminPageAction extends ActionSupport implements ModelDriven<FoodMo
         Map resMap = new HashMap();
         Gson gson = new Gson();
         try{
+            String log = session.get("loger").toString();
+            if(log.equals("admin")){
             this.adminName = session.get("logName").toString();
             
             resMap.put("adminName", getAdminName());
+            
+            }else if(log.equals("user")){
+                return "user";
+            }else{
+                this.message = "Please LogIn";
+                return LOGIN;
+            }
             String json = gson.toJson(resMap);
-
             response.setContentType("application/json");
             response.getWriter().write(json);
         }catch(Exception e){
@@ -182,7 +196,102 @@ public class AdminPageAction extends ActionSupport implements ModelDriven<FoodMo
         }
         return SUCCESS;
     }
+    
+    public String getAllAdmin(){
+        try{
+        Map resMap = new HashMap();
+        Gson gson = new Gson();
+        HttpServletResponse response = ServletActionContext.getResponse();
+            List<AdminModel> allAdmin = AdminDao.getAllAdmin();
+            resMap.put("allAdmin", allAdmin);
+
+            String json = gson.toJson(resMap);
+            response.setContentType("application/json");
+            response.getWriter().write(json);
+            
+        }catch(Exception e){
+            this.message = e.toString();
+            return ERROR;
+        }
+        return SUCCESS;
+    }
      
+    public String deleteAdmin(){
+        try{
+        Map resMap = new HashMap();
+        Gson gson = new Gson();
+        HttpServletResponse response = ServletActionContext.getResponse();
+            if(AdminDao.deleteAdmin(getAdminName(), fModel.getUpdateBy(), DateTimeSetting.getCurrentDateTime())){
+                this.message = "Admiin Delete Successfull";
+            }else{
+                this.message = "Admin Delete Fail";
+            }
+            resMap.put("message", getMessage());
+
+            String json = gson.toJson(resMap);
+            response.setContentType("application/json");
+            response.getWriter().write(json);
+            
+        }catch(Exception e){
+            this.message = e.toString();
+            return ERROR;
+        }
+        return SUCCESS;
+    }
+    
+    public String addNewAdmin(){
+        try{
+        Map resMap = new HashMap();
+        Gson gson = new Gson();
+        HttpServletResponse response = ServletActionContext.getResponse();
+        if(adModel.getAdminName().equals(" ") || adModel.getPassword().equals(" ")){
+            this.message = "Admiin Name or Password Cannot be Empty";
+        }
+
+            if(AdminDao.registerAdmin(new AdminModel(adModel.getAdminName(), adModel.getPhNumber(), PasswordEncrypt.pEncode(adModel.getPassword()),
+                adModel.getAdRole(), DateTimeSetting.getCurrentDateTime(), adModel.getUpdateBy()))){
+                this.message = "Admiin Add Successfull";
+            }else{
+                this.message = "Admin ADD Fail";
+            }
+            resMap.put("message", getMessage());
+
+            String json = gson.toJson(resMap);
+            response.setContentType("application/json");
+            response.getWriter().write(json);
+            
+        }catch(Exception e){
+            this.message = e.toString();
+            return ERROR;
+        }
+        return SUCCESS;
+    }
+    
+    
+    public String editAdminDetails(){
+        HttpServletResponse response = ServletActionContext.getResponse();
+        Map resMap = new HashMap();
+        Gson gson = new Gson();
+        try{
+        
+            adModel.setUpDateTime(DateTimeSetting.getCurrentDateTime());
+            if(AdminDao.editAdmin(getAdModel(),getAdminName())){
+                this.message = "Admin Edit Successfull";
+            }else{
+                this.message = "Admin Edit Fail";
+            }
+            resMap.put("message", getMessage());
+
+            String json = gson.toJson(resMap);
+            response.setContentType("application/json");
+            response.getWriter().write(json);
+        }catch(Exception e){
+            this.message = e.toString();
+            return ERROR;
+        }
+        return SUCCESS;
+    }
+    
     
     public String getAdminName() {
         return adminName;
@@ -205,4 +314,13 @@ public class AdminPageAction extends ActionSupport implements ModelDriven<FoodMo
         return fModel;
     }
 
+    public AdminModel getAdModel() {
+        return adModel;
+    }
+
+    public void setAdModel(AdminModel adModel) {
+        this.adModel = adModel;
+    }
+
+    
 }

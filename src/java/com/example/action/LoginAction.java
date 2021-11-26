@@ -34,12 +34,14 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserModel>
                 if(res.equals("success")) {
                         Map<String, Object> session = ActionContext.getContext().getSession();
                         session.put("logName", userModel.getUserName());
+                        session.put("loger", "user");
                         return SUCCESS;
                 }else{
                     String resAdmin = loginService.verifyLoginAdmin(userModel);
                     if(resAdmin.equals("success")) {
                         Map<String, Object> session = ActionContext.getContext().getSession();
                         session.put("logName", userModel.getUserName());
+                        session.put("loger", "user");
                         return "admin";
                     }
                     this.message = "Account is Invalid ";
@@ -60,6 +62,7 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserModel>
                     case "success":
                         Map<String, Object> session = ActionContext.getContext().getSession();
                         session.put("logName", uModel.getUserName());
+                        session.put("loger", "user");
                         if (this.remember) {
                             Cookie ckUserName = new Cookie("logName", uModel.getUserName());
                             ckUserName.setMaxAge(3600);
@@ -94,6 +97,7 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserModel>
                     case "success":
                         Map<String, Object> session = ActionContext.getContext().getSession();
                         session.put("logName", uModel.getUserName());
+                        session.put("loger", "admin");
                         if (this.remember) {
                             Cookie ckUserName = new Cookie("logName", uModel.getUserName());
                             ckUserName.setMaxAge(3600);
