@@ -22,56 +22,54 @@
             <br><br>
             <h2>Registration page</h2>
             <br><br>
-
             <div class="alert alert-primary d-none" id="alertBox" role="alert">
-               <p id="mid">  ${message} </p>
+                <p id="mid">  ${message} </p>
             </div>
-            
             <s:form action="register">
-            <div class="mb-3">
-                <s:label cssClass="form-label"  value="User Name"/>
-                <s:textfield cssClass="form-control" placeholder="Enter Last Name" name="userName"/>
-            </div>
-            <div class="mb-3">
-                <s:label cssClass="form-label"  value="First Name"/>
-                <s:textfield cssClass="form-control" placeholder="Enter Last Name" name="firstName"/>
-            </div>
-            <div class="mb-3">
-                <s:label cssClass="form-label"  value="Last Name"/>
-                <s:textfield cssClass="form-control" placeholder="Enter Last Name" name="lastName"/>
-            </div>
-            <div class="mb-3">
-                <s:label cssClass="form-label" value="Phone Number"/>
-                <s:textfield cssClass="form-control" placeholder="Enter Phone Number" name="number"/>
-            </div>
-            <div class="mb-3">
-                <s:label for="exampleInputPassword1" cssClass="form-label" value="Password"/>
-                <s:password maxLength="9"  cssClass="form-control" placeholder="Enter password" name="password"/>
-            </div>
-
-            <div class="mb-3">
-                <s:label for="exampleInputPassword1" cssClass="form-label" value="Confirm Password"/>
-                <s:password cssClass="form-control" placeholder="Enter Confirm password" name="con_password"/>
-            </div>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <s:submit cssClass="btn btn-primary" value="Register"/>
-            </div>
-               </s:form>
+                <div class="mb-3">
+                    <s:label cssClass="form-label"  value="User Name"/>
+                    <s:textfield cssClass="form-control" placeholder="Enter Last Name" name="userName"/>
+                </div>
+                <div class="mb-3">
+                    <s:label cssClass="form-label"  value="First Name"/>
+                    <s:textfield cssClass="form-control" placeholder="Enter Last Name" name="firstName"/>
+                </div>
+                <div class="mb-3">
+                    <s:label cssClass="form-label"  value="Last Name"/>
+                    <s:textfield cssClass="form-control" placeholder="Enter Last Name" name="lastName"/>
+                </div>
+                <div class="mb-3">
+                    <s:label cssClass="form-label" value="Phone Number"/>
+                    <s:textfield cssClass="form-control" placeholder="Enter Phone Number" name="number"/>
+                </div>
+                <div class="mb-3">
+                    <s:label for="exampleInputPassword1" cssClass="form-label" value="Password"/>
+                    <s:password maxLength="9"  cssClass="form-control" placeholder="Enter password" name="password"/>
+                </div>
+                <div class="mb-3">
+                    <s:label for="exampleInputPassword1" cssClass="form-label" value="Confirm Password"/>
+                    <s:password cssClass="form-control" placeholder="Enter Confirm password" name="con_password"/>
+                </div>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <s:submit cssClass="btn btn-primary" value="Register"/>
+                </div>
+            </s:form>
             <s:a href="login.jsp">Login</s:a> 
         </div>
         <br><br>
-        
+
         <script>
-                 $(document).ready(function()  
-                    {
-                    $('#logOutIdClass').addClass("d-none");
-                  var message = $('#mid').html();
-                  if(message.length>5){
-                      $('#alertBox').removeClass("d-none");
-                      setTimeout(function(){  $('#alertBox').addClass("d-none"); }, 3000);
-                  }
-                });
-                
-                </script>
+            $(document).ready(function ()
+            {
+                $('#logOutIdClass').addClass("d-none");
+                var message = $('#mid').html();
+                if (message.length > 5) {
+                    $('#alertBox').removeClass("d-none");
+                    setTimeout(function () {
+                        $('#alertBox').addClass("d-none");
+                    }, 3000);
+                }
+            });
+        </script>
     </body>
 </html>

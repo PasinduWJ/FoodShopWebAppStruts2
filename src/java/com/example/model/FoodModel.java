@@ -1,10 +1,9 @@
-
 package com.example.model;
 
 import java.io.Serializable;
 
-public class FoodModel implements Serializable{
-    
+public class FoodModel implements Serializable {
+
     private int id;
     private String foodName;
     private double unitPrice;
@@ -12,7 +11,7 @@ public class FoodModel implements Serializable{
     private Boolean available;
     private String upDateTime, updateBy;
     private Boolean state;
-    
+
     public FoodModel() {
     }
 

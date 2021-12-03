@@ -2,8 +2,8 @@ package com.example.model;
 
 import java.io.Serializable;
 
-public class UserModel implements Serializable{
-    
+public class UserModel implements Serializable {
+
     private String firstName, lastName, userName, password, con_password;
     private int phNumber;
     private Boolean state;
@@ -30,7 +30,6 @@ public class UserModel implements Serializable{
         this.updateBy = updateBy;
     }
 
-    
     public UserModel(String firstName, String lastName, String userName, String password, int pNumber, Boolean state, String cDateTime) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -48,7 +47,6 @@ public class UserModel implements Serializable{
         this.phNumber = phNumber;
     }
 
-    
     public String getFirstName() {
         return firstName;
     }

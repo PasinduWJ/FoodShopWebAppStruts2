@@ -1,4 +1,3 @@
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="/struts-tags" prefix="s" %> 
 <!DOCTYPE html>
@@ -12,15 +11,12 @@
     <body onload="pageLoad()">
         <%@include file="WEB-INF/header.jspf" %>
         <br><br>
-
         <div class="container">
             <h2>Login page</h2>
             <br><br>
-
             <div class="col-5 col-md-5 alert alert-info position-absolute top-5 end-0 d-none" id="alertBox" role="alert">
                 <p id="message"> ${message}</p>
             </div>
-
             <s:form action="loginAcc">
                 <div class="form-check form-switch">
                     <s:checkbox cssClass="form-check-input" label=" Admin " role="switch" id="adminLogCheck" name="adminSwitch"/>
@@ -34,7 +30,6 @@
                 <div class="mb-3">
                     <s:checkbox cssClass="form-check-input" label="Remember Me? " name="remember"/>
                 </div>
-
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <s:submit cssClass="btn btn-primary"/>
                 </div>
@@ -42,11 +37,9 @@
             Not registered yet ,Please Sign Up
             <a href ="register.jsp">Sign Up</a>
         </div>
-
+            
         <script>
-
             $(document).ready(function () {
-
                 var message = $('#message').html();
                 if (message.length > 5) {
                     $('#alertBox').removeClass("d-none");
@@ -57,16 +50,9 @@
             });
 
             function pageLoad() {
-
-
                 var userName = readCookie("logName");
-//                     var password = readCookie("password");
-                console.log(userName);
                 if (userName === null) {
                     $('#logOutIdClass').addClass("d-none");
-//                         $.('#userNameid').val("sd");
-//                         $.('#password').val(password);
-
                 }
             }
 
@@ -82,7 +68,6 @@
                 }
                 return null;
             }
-
         </script>
     </body>
 </html>

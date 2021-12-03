@@ -1,9 +1,9 @@
-
 package com.example.model;
 
 import java.io.Serializable;
 
-public class OrderModel implements Serializable{
+public class OrderModel implements Serializable {
+
     private int id;
     private String userName;
     private int foodId, quantity;
@@ -27,7 +27,6 @@ public class OrderModel implements Serializable{
         this.quantity = quantity;
         this.upDateTime = upDateTime;
     }
-    
 
     public OrderModel(int id, int foodId, int quantity, String uDateTime, Boolean delivery) {
         this.id = id;

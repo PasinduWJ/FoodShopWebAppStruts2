@@ -5,16 +5,14 @@ var order = [];
 var foodItems = [];
 var allOrders = [];
 var hasIn = false;
-//var myModal;
 
 $(document).ready(function () {
-
     $('#logOutId').click(function () {
         sessionStorage.clear();
         $(location).attr('href', 'login.jsp');
     });
 
-    $('#todayItems').click(function () {
+    $('#itemsRoleBtnId').click(function () {
         $('#addForm').removeClass("d-none");
         $.ajax({
             type: "GET",
@@ -36,12 +34,8 @@ $(document).ready(function () {
         $('#addForm').addClass("d-none");
     });
 
-
-
     $('#add-newItem-btn').click(function () {
-
         if (!hasIn) {
-
             hasIn = true;
             $('#foodTable').append(
                     "<tr id='newRowAdd' >" +
@@ -64,7 +58,7 @@ $(document).ready(function () {
         }
     });
 
-    $('#viewCusId').click(function () {
+    $('#customerRoleBtnId').click(function () {
         $('#exampleModalLabel').html("All Customers");
         $.ajax({
             type: "GET",
@@ -75,7 +69,7 @@ $(document).ready(function () {
                 var allCustomers = data["allCustomers"];
                 if (allCustomers) {
                     AllCustomersTable(allCustomers);
-                }else{
+                } else {
                     message = "Data Not Found";
                     show("alert-warning");
                 }
@@ -87,7 +81,7 @@ $(document).ready(function () {
         });
     });
 
-    $('#viewAdminId').click(function () {
+    $('#adminRoleBtnId').click(function () {
         $('#exampleModalLabel').html("All Admin");
         $.ajax({
             type: "GET",
@@ -98,7 +92,7 @@ $(document).ready(function () {
                 var allAdmin = data["allAdmin"];
                 if (allAdmin) {
                     AllAdminTable(allAdmin);
-                }else{
+                } else {
                     message = "Data Not Found";
                     show("alert-warning");
                 }
@@ -109,24 +103,15 @@ $(document).ready(function () {
             }
         });
     });
-    
-    $('#addNewAdminId').click(function () {
-        $('#exampleModalLabel').html("Add New Admin");
-        AddNewAdmin();
-    });
-    
-    $('#addNewAdminId').click(function () {
-        $('#exampleModalLabel').html("Add New Admin");
-        AddNewAdmin();
-    });
-    
 
-    
+    $('#addRoleBtnId').click(function () {
+        $('#exampleModalLabel').html("Add New Admin");
+        AddNewAdmin();
+    });
+
 });
 
-
 function userLoad() {
-
     $.ajax({
         type: "GET",
         async: false,
@@ -134,6 +119,7 @@ function userLoad() {
         data: {},
         success: function (data) {
             loger = data["adminName"];
+            showActions(data["role"]);
             sessionStorage.setItem("loger", loger);
         },
         error: function (request, error) {
@@ -145,7 +131,6 @@ function userLoad() {
     if (!loger) {
         $(location).attr('href', 'login.jsp');
     } else {
-
         $('#logOutIdClass').removeClass("d-none");
         $('#sessUserName').html(loger);
         $.ajax({
@@ -183,7 +168,6 @@ function buildOrderTable() {
                     "<i onclick= (clickDelete(" + dt.id + ")) class='fas fa-trash-alt' style='color:red; font-size:30px; margin:5px;'></i>" +
                     "</td>"
                     );
-
         } else {
             $('#orderTable').append(
                     "<tr>" +
@@ -193,16 +177,14 @@ function buildOrderTable() {
                     "<td>" + dt.upDateTime + "</td>" +
                     "<td>" + dt.quantity + "</td>" +
                     "<td>" +
-                    "<i class='fas fa-thumbs-up' style='color:gray; font-size:30px; margin:5px;'>  </i>"+
-                    "<i onclick= (clickViewUser('" + dt.userName+ "')) class='fas fa-user' style='color:green; font-size:30px; margin:5px;'></i>" +
+                    "<i class='fas fa-thumbs-up' style='color:gray; font-size:30px; margin:5px;'>  </i>" +
+                    "<i onclick= (clickViewUser('" + dt.userName + "')) class='fas fa-user' style='color:green; font-size:30px; margin:5px;'></i>" +
                     "<i onclick= (clickDelete(" + dt.id + ")) class='fas fa-trash-alt' style='color:red; font-size:30px; margin:5px;'></i>" +
                     "</td>"
                     );
         }
     }
     );
-
-
 }
 
 function buildFoodTable() {
@@ -229,7 +211,6 @@ function buildFoodTable() {
                     "<input id='inputMaxOrder" + dt.id + "' class='d-none' type='number' min=0 style='width: 100px;' value='" + dt.maxOrder + "' >" +
                     "</td>" +
                     "<td>" + avl + " Only </td>"
-
                     );
             if (dt.available) {
                 $('#foodTable td:last').after(
@@ -257,9 +238,6 @@ function buildFoodTable() {
                     "</td>" +
                     "</tr>"
                     );
-
-
-
         });
     }
 }
@@ -269,7 +247,6 @@ function clickNewFood() {
     var unitPrice = $('#inputPrice').val();
     var maxOrder = $('#inputMaxOrder').val();
     if (foodName && unitPrice && maxOrder) {
-
         $.ajax({
             type: "GET",
             async: true,
@@ -283,16 +260,13 @@ function clickNewFood() {
                 buildFoodTable();
                 show("alert-info");
                 hasIn = false;
-
             },
             error: function (request, error) {
                 console.log(arguments);
                 alert(" Can't do because: " + error);
             }
         });
-
     }
-
 }
 function getCurrentOrdersId(id) {
     var orders = 0;
@@ -350,14 +324,12 @@ function clickEditDone(id) {
             message = data["message"];
             buildFoodTable();
             show("alert-info");
-
         },
         error: function (request, error) {
             console.log(arguments);
             alert(" Can't do because: " + error);
         }
     });
-
 }
 
 function clickDelete(id) {
@@ -403,29 +375,29 @@ function clickDeleteFood(id) {
         });
     }
 }
-function clickViewUser(uName){
+function clickViewUser(uName) {
     $('#exampleModalLabel').html("Customers Details");
-        $.ajax({
-            type: "GET",
-            async: true,
-            url: "userPage/getCustomerDetails",
-            data: {"userName": uName},
-            success: function (data) {
-                var customer = data["customer"];
-                if (customer) {
-                    $("#exampleModal1").modal('show');
-                    AllCustomersTable(customer);
-                }else{
-                    $("#exampleModal1").modal('hide');
-                    message = "Data Not Found";
-                    show("alert-warning");
-                }
-            },
-            error: function (request, error) {
-                console.log(arguments);
-                alert(" Can't do because: " + error);
+    $.ajax({
+        type: "GET",
+        async: true,
+        url: "userPage/getCustomerDetails",
+        data: {"userName": uName},
+        success: function (data) {
+            var customer = data["customer"];
+            if (customer) {
+                $("#exampleModal1").modal('show');
+                AllCustomersTable(customer);
+            } else {
+                $("#exampleModal1").modal('hide');
+                message = "Data Not Found";
+                show("alert-warning");
             }
-        });
+        },
+        error: function (request, error) {
+            console.log(arguments);
+            alert(" Can't do because: " + error);
+        }
+    });
 }
 
 function AllCustomersTable(allCustomers) {
@@ -441,22 +413,21 @@ function AllCustomersTable(allCustomers) {
             "</tr></thead><tbody >");
     allCustomers.forEach(function (dt) {
         $('.modal-body tbody:last').append(
-                "<tr id='userDetails"+ dt.userName +"'><td scope='row'></td>" +
+                "<tr id='userDetails" + dt.userName + "'><td scope='row'></td>" +
                 "<td>" +
-                    "<p>" + dt.userName + "</p>" +
-                    "<input id=inputUserName class='d-none'   style='width: 100px;' value='" + dt.userName + "' >" +
+                "<h5>" + dt.userName + "</h5>" +
                 "</td>" +
                 "<td>" +
-                    "<p>" + dt.firstName + "</p>" +
-                    "<input id=inputfName class='d-none'   style='width: 100px;' value='" + dt.firstName + "' >" +
+                "<p>" + dt.firstName + "</p>" +
+                "<input id=inputfName class='d-none'   style='width: 100px;' value='" + dt.firstName + "' >" +
                 "</td>" +
                 "<td>" +
-                    "<p>" + dt.lastName + "</p>" +
-                    "<input id=inputlName class='d-none'  style='width: 100px;' value='" + dt.lastName + "' >" +
+                "<p>" + dt.lastName + "</p>" +
+                "<input id=inputlName class='d-none'  style='width: 100px;' value='" + dt.lastName + "' >" +
                 "</td>" +
-                "<td>" + 
-                    "<p>" + dt.phNumber + "</p>" +
-                    "<input id=inputNum class='d-none' type='number' min=0 style='width: 100px;' value=" + dt.phNumber + " >" +
+                "<td>" +
+                "<p>" + dt.phNumber + "</p>" +
+                "<input id=inputNum class='d-none' type='number' min=0 style='width: 100px;' value=" + dt.phNumber + " >" +
                 "</td> <td>" +
                 "<i id=Donebtn onclick= (clickEdituserDone('" + dt.userName + "')) class='fas fa-check-square d-none' style='color:green; font-size:30px; margin:5px;'></i>" +
                 "<i id=Closebtn onclick=(clickEditCloseUser('" + dt.userName + "')) class='fas fa-window-close d-none' style='color:maroon; font-size:30px; margin:5px;'></i>" +
@@ -467,7 +438,6 @@ function AllCustomersTable(allCustomers) {
     });
     $('.modal-body tbody:last').after(
             "</tbody></table>");
-
 }
 
 function clickEditUser(userName) {
@@ -486,22 +456,20 @@ function clickEditCloseUser(userName) {
     $("#userDetails" + userName).children('td').children('#Closebtn').addClass('d-none');
 }
 function clickEdituserDone(userName) {
-    
-    var uName =  $("#userDetails" + userName).children('td').children("#inputUserName").val();
-    var fName =  $("#userDetails" + userName).children('td').children("#inputfName").val();
+    var uName = userName;
+    var fName = $("#userDetails" + userName).children('td').children("#inputfName").val();
     var lName = $("#userDetails" + userName).children('td').children("#inputlName").val();
     var phNumber = $("#userDetails" + userName).children('td').children("#inputNum").val();
     $.ajax({
         type: "GET",
         async: true,
         url: "userPage/editUserDetails",
-        data: {"updateBy": loger,"usName": userName,  "userName": uName, "firstName": fName, "lastName": lName,
+        data: {"updateBy": loger, "usName": userName, "userName": uName, "firstName": fName, "lastName": lName,
             "phNumber": phNumber},
         success: function (data) {
             message = data["message"];
             $("#exampleModal1").modal('hide');
             show("alert-info");
-
         },
         error: function (request, error) {
             console.log(arguments);
@@ -511,100 +479,95 @@ function clickEdituserDone(userName) {
 
 }
 
-function AddNewAdmin(){
+function AddNewAdmin() {
     $('.modal-body').empty();
     $('.modal-body').append(
-            "<div class='mb-3'>"+  
-                "<label class='form-label'> Name</label>"+
-                "<input class='form-control' id='adminNameId' required>"+
-                "<div id='nameHelp' class='form-text d-none'>Please fill Admin Name.</div>"+
-            "</div>"+
-            "<div class='mb-3'>"+  
-                "<label class='form-label'> Phone Number</label>"+
-                "<input class='form-control' type='number' id='phNumberId' required>"+
-                "<div id='numHelp' class='form-text d-none'>Please fill Phone Number.</div>"+
-            "</div>"+
-            "<div class='mb-3'>"+  
-                "<label class='form-label'> Password</label>"+
-                "<input class='form-control' type='password' id='passwordId' required >"+
-                "<div id='passHelp' class='form-text d-none'>Please fill Password.</div>"+
-            "</div>"+
-            "<div class='mb-3'>"+  
-                "<label class='form-label'> Confirm Password</label>"+
-                "<input class='form-control' type='password' id='con_passwordId' required >"+
-                "<div id='conPassHelp' class='form-text d-none'>Please fill Confirm Password.</div>"+
-                "<div id='conPassMatch' class='form-text d-none'>Not Same Confirm Password.</div>"+
-            "</div>"+
-            "<div class='mb-3'>"+  
-                "<label class='form-label'> Role</label>"+
-                "<input class='form-control' id='adRoleId' required>"+
-                "<div id='roleHelp' class='form-text d-none'>Please fill Role.</div>"+
-            "</div>"+
-            "<button id='adSubBtn' type='button' class='btn btn-primary'>Submit</button>"+
+            "<div class='mb-3'>" +
+            "<label class='form-label'> Name</label>" +
+            "<input class='form-control' id='adminNameId' required>" +
+            "<div id='nameHelp' class='form-text d-none'>Please fill Admin Name.</div>" +
+            "</div>" +
+            "<div class='mb-3'>" +
+            "<label class='form-label'> Phone Number</label>" +
+            "<input class='form-control' type='number' id='phNumberId' required>" +
+            "<div id='numHelp' class='form-text d-none'>Please fill Phone Number.</div>" +
+            "</div>" +
+            "<div class='mb-3'>" +
+            "<label class='form-label'> Password</label>" +
+            "<input class='form-control' type='password' id='passwordId' required >" +
+            "<div id='passHelp' class='form-text d-none'>Please fill Password.</div>" +
+            "</div>" +
+            "<div class='mb-3'>" +
+            "<label class='form-label'> Confirm Password</label>" +
+            "<input class='form-control' type='password' id='con_passwordId' required >" +
+            "<div id='conPassHelp' class='form-text d-none'>Please fill Confirm Password.</div>" +
+            "<div id='conPassMatch' class='form-text d-none'>Not Same Confirm Password.</div>" +
+            "</div>" +
+            "<div class='mb-3'>" +
+            "<label class='form-label'> Role</label>" +
+            "<input class='form-control' id='adRoleId' required>" +
+            "<div id='roleHelp' class='form-text d-none'>Please fill Role.</div>" +
+            "</div>" +
+            "<button id='adSubBtn' type='button' class='btn btn-primary'>Submit</button>" +
             "</div>"
             );
-    
-        $('#adSubBtn').click(function () {
-            var aName = $('#adminNameId').val();
-            var phNumber = $('#phNumberId').val();
-            var password = $('#passwordId').val();
-            var con_password = $('#con_passwordId').val();
-            var role = $('#adRoleId').val();
-            
-            if(!aName){
-                $('#nameHelp').removeClass('d-none');
-            }else{
-                $('#nameHelp').addClass('d-none');
+
+    $('#adSubBtn').click(function () {
+        var aName = $('#adminNameId').val();
+        var phNumber = $('#phNumberId').val();
+        var password = $('#passwordId').val();
+        var con_password = $('#con_passwordId').val();
+        var role = $('#adRoleId').val();
+
+        if (!aName) {
+            $('#nameHelp').removeClass('d-none');
+        } else {
+            $('#nameHelp').addClass('d-none');
+        }
+        if (!phNumber) {
+            $('#numHelp').removeClass('d-none');
+        } else {
+            $('#numHelp').addClass('d-none');
+        }
+        if (!password) {
+            $('#passHelp').removeClass('d-none');
+        } else {
+            $('#passHelp').addClass('d-none');
+        }
+        if (!con_password) {
+            $('#conPassHelp').removeClass('d-none');
+        } else {
+            $('#conPassHelp').addClass('d-none');
+        }
+        if (!role) {
+            $('#roleHelp').removeClass('d-none');
+        } else {
+            $('#roleHelp').addClass('d-none');
+        }
+        if (password === con_password) {
+            $('#conPassMatch').addClass('d-none');
+            if (aName !== '' && phNumber !== '' && password !== '' && con_password !== '' && role !== '') {
+                $.ajax({
+                    type: "GET",
+                    async: false,
+                    url: "adminPage/addNewAdmin",
+                    data: {"adModel.adminName": aName, "adModel.updateBy": loger, "adModel.phNumber": phNumber, "adModel.password": password,
+                        "adModel.adRole": role},
+                    success: function (data) {
+                        message = data["message"];
+                        $("#exampleModal1").modal('hide');
+                        show("alert-warning");
+                    },
+                    error: function (request, error) {
+                        console.log(arguments);
+                        alert(" Can't do because: " + error);
+                    }
+                });
             }
-            if(!phNumber){
-                $('#numHelp').removeClass('d-none');
-            }else{
-                $('#numHelp').addClass('d-none');
-            }
-            if(!password){
-                $('#passHelp').removeClass('d-none');
-            }else{
-                $('#passHelp').addClass('d-none');
-            }
-            if(!con_password){
-                $('#conPassHelp').removeClass('d-none');
-            }else{
-                $('#conPassHelp').addClass('d-none');
-            }
-            if(!role){
-                $('#roleHelp').removeClass('d-none');
-            }else{
-                $('#roleHelp').addClass('d-none');
-            }
-            if(password === con_password){
-                $('#conPassMatch').addClass('d-none'); 
-                if(aName !==''  && phNumber!==''  && password !==''  && con_password !==''  && role !=='' ){
-                    $.ajax({
-                        type: "GET",
-                        async: false,
-                        url: "adminPage/addNewAdmin",
-                        data: {"adModel.adminName": aName, "adModel.updateBy": loger, "adModel.phNumber": phNumber, "adModel.password":password,
-                                "adModel.adRole":role},
-                        success: function (data) {
-                            message = data["message"];
-                            $("#exampleModal1").modal('hide');
-                            show("alert-warning");
-                        },
-                        error: function (request, error) {
-                            console.log(arguments);
-                            alert(" Can't do because: " + error);
-                        }
-                    });
-                }
-            }else{
-                $('#conPassMatch').removeClass('d-none');
-            }
-                
-            
-            
-            
-        });
-    
+        } else {
+            $('#conPassMatch').removeClass('d-none');
+        }
+    });
 }
 
 function AllAdminTable(allAdmin) {
@@ -619,22 +582,21 @@ function AllAdminTable(allAdmin) {
             "</tr></thead><tbody >");
     allAdmin.forEach(function (dt) {
         $('.modal-body tbody:last').append(
-                "<tr id='adminDetails"+ dt.adminName +"'><td scope='row'></td>" +
+                "<tr id='adminDetails" + dt.adminName + "'><td scope='row'></td>" +
                 "<td>" +
-                    "<p>" + dt.adminName + "</p>" +
-                    "<input id=inputName class='d-none'   style='width: 100px;' value='" + dt.adminName + "' >" +
+                "<h5>" + dt.adminName + "</h5>" +
                 "</td>" +
                 "<td>" +
-                    "<p>" + dt.adRole + "</p>" +
-                    "<input id=inputRole class='d-none'   style='width: 100px;' value='" + dt.adRole + "' >" +
+                "<p>" + dt.adRole + "</p>" +
+                "<input id=inputRole class='d-none'   style='width: 100px;' value='" + dt.adRole + "' >" +
                 "</td>" +
                 "<td>" +
-                    "<p>" + dt.phNumber + "</p>" +
-                    "<input id=inputphNum class='d-none' type='number' min=0   style='width: 100px;' value='" + dt.phNumber + "' >" +
-                "</td>" );
-        if (dt.adRole.toString() === "main" || dt.adminName === loger) {
+                "<p>" + dt.phNumber + "</p>" +
+                "<input id=inputphNum class='d-none' type='number' min=0   style='width: 100px;' value='" + dt.phNumber + "' >" +
+                "</td>");
+        if (dt.adRole.toString() === "admin" || dt.adminName === loger) {
             $('.modal-body td:last').after(
-                    "<td>"+
+                    "<td>" +
                     "<i id=Donebtn onclick= (clickEditadminDone('" + dt.adminName + "')) class='fas fa-check-square d-none' style='color:green; font-size:30px; margin:5px;'></i>" +
                     "<i id=Closebtn onclick=(clickEditCloseadmin('" + dt.adminName + "')) class='fas fa-window-close d-none' style='color:maroon; font-size:30px; margin:5px;'></i>" +
                     "<i id=EditAdminbtn onclick= (clickEditadmin('" + dt.adminName + "')) class='fas fa-pen-square' style='color:green; font-size:30px; margin:5px;'></i>" +
@@ -643,7 +605,7 @@ function AllAdminTable(allAdmin) {
                     );
         } else {
             $('.modal-body td:last').after(
-                    "<td>"+
+                    "<td>" +
                     "<i id=Donebtn onclick= (clickEditadminDone('" + dt.adminName + "')) class='fas fa-check-square d-none' style='color:green; font-size:30px; margin:5px;'></i>" +
                     "<i id=Closebtn onclick=(clickEditCloseadmin('" + dt.adminName + "')) class='fas fa-window-close d-none' style='color:maroon; font-size:30px; margin:5px;'></i>" +
                     "<i id=EditAdminbtn onclick= (clickEditadmin('" + dt.adminName + "')) class='fas fa-pen-square' style='color:green; font-size:30px; margin:5px;'></i>" +
@@ -654,9 +616,7 @@ function AllAdminTable(allAdmin) {
     });
     $('.modal-body tbody:last').after(
             "</tbody></table>");
-
 }
-
 
 function clickEditadmin(adminName) {
     $("#adminDetails" + adminName).children('td').children('p').addClass('d-none');
@@ -674,27 +634,26 @@ function clickEditCloseadmin(adminName) {
     $("#adminDetails" + adminName).children('td').children('#Closebtn').addClass('d-none');
 }
 function clickEditadminDone(adminName) {
-    var aName =  $("#adminDetails" + adminName).children('td').children("#inputName").val();
+    var aName = adminName;
     var role = $("#adminDetails" + adminName).children('td').children("#inputRole").val();
     var phNumber = $("#adminDetails" + adminName).children('td').children("#inputphNum").val();
     $.ajax({
         type: "GET",
         async: true,
         url: "adminPage/editAdminDetails",
-        data: {"adModel.updateBy": loger, "adminName": adminName, "adModel.adminName": aName, "adModel.adRole": role,"adModel.phNumber": phNumber},
+        data: {"adModel.updateBy": loger, "adminName": adminName, "adModel.adminName": aName, "adModel.adRole": role, "adModel.phNumber": phNumber},
         success: function (data) {
             message = data["message"];
             $("#exampleModal1").modal('hide');
             show("alert-info");
-
         },
         error: function (request, error) {
             console.log(arguments);
             alert(" Can't do because: " + error);
         }
     });
-
 }
+
 function clickDeleteAdmin(aName) {
     if (confirm("Are You Sure Delete This Admin?")) {
         $.ajax({
@@ -757,6 +716,12 @@ function clickSend(id) {
     }
 }
 
+function showActions(role) {
+    role.forEach(function (dt) {
+        $("#" + dt + "RoleBtnId").removeClass("d-none");
+    });
+}
+
 function show(color) {
     $('#alertBox').removeClass("d-none");
     $('#alertBox').addClass(color);
@@ -765,4 +730,3 @@ function show(color) {
         $('#alertBox').addClass("d-none");
     }, 5000);
 }
-

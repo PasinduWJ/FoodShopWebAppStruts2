@@ -14,30 +14,23 @@
     </head>
     <body onload="userLoad()">
         <%@include file="WEB-INF/header.jspf" %>
-
         <br><br><br>
         <div class="container">
-
             <h1>Hello <samp id="sessUserName"> </samp> </h1>
-
             <div class="col-5 col-md-5 alert alert-info position-absolute top-10 end-0 d-none" id="alertBox" role="alert">
                 <p id="message"> ${message}</p>
             </div>
-
             <br>
             <div class="d-grid gap-2 d-md-flex justify-content-md">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1" id="addNewAdminId"><i class="fas fa-user-plus"></i> Add New Admin</button>
+                <button type="button" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal1" id="addRoleBtnId"><i class="fas fa-user-plus"></i> Add New Admin</button>
             </div>
             <br>
             <div class="d-grid gap-2 d-md-flex justify-content-md">
-                <button type="button" class="btn btn-success" id="todayItems"><i class="fas fa-hamburger"></i> ToDay Items </button>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1" id="viewCusId"><i class="fas fa-users"></i> Customers</button>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1" id="viewAdminId"><i class="fas fa-user-tie"></i>  Admin</button>
+                <button type="button" class="btn btn-success d-none" id="itemsRoleBtnId"><i class="fas fa-hamburger"></i> ToDay Items </button>
+                <button type="button" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal1" id="customerRoleBtnId"><i class="fas fa-users"></i> Customers</button>
+                <button type="button" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal1" id="adminRoleBtnId"><i class="fas fa-user-tie"></i>  Admin</button>
             </div>
-
             <br>
-
-
             <div class="row d-none" id="addForm">
                 <div class="container" style="margin-bottom: 100px; margin-top: 20px;">
                     <table class="table table-striped">
@@ -55,17 +48,14 @@
                         <tbody id="foodTable">
                         </tbody>
                     </table>
-
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <button type="button" class="btn btn-danger" id="order-can-btn"> Cancel </button>
                         <button type="button" class="btn btn-primary" id="add-newItem-btn"> Add New Item </button>
                     </div>
                 </div>
             </div>
-
             <div class="row">
                 <div class="container" style="margin-bottom: 100px; margin-top: 20px;">
-
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -80,11 +70,8 @@
                         <tbody id="orderTable">
                         </tbody>
                     </table>
-
                 </div>
             </div>
-
-
             <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-scrollable modal-lg">
                     <div class="modal-content">
@@ -93,18 +80,10 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-
-
-
                         </div>
                     </div>
                 </div>
             </div>
-
-
-
         </div>       
-
     </body>
-
 </html>

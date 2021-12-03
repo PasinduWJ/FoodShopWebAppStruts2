@@ -1,10 +1,9 @@
-
 package com.example.model;
 
 import java.io.Serializable;
 
-public class AdminModel implements Serializable{
-    
+public class AdminModel implements Serializable {
+
     private String adminName;
     private int phNumber;
     private String password;
@@ -21,7 +20,6 @@ public class AdminModel implements Serializable{
         this.adRole = adRole;
     }
 
-    
     public AdminModel(String adminName, int pNumber, String password, String Role, Boolean state, String cDateTime, String uDateTime, String updateBy) {
         this.adminName = adminName;
         this.phNumber = pNumber;
@@ -41,7 +39,6 @@ public class AdminModel implements Serializable{
         this.crDateTime = crDateTime;
         this.updateBy = updateBy;
     }
-    
 
     public String getAdminName() {
         return adminName;

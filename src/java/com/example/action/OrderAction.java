@@ -1,5 +1,4 @@
 package com.example.action;
-
 import com.example.dao.FoodDao;
 import com.example.dao.OrderDao;
 import com.example.model.FoodModel;
@@ -18,7 +17,7 @@ import org.apache.struts2.ServletActionContext;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-public class OrderAction extends ActionSupport implements ModelDriven<OrderModel>{
+public class OrderAction extends ActionSupport implements ModelDriven<OrderModel> {
 
     private OrderModel orderModel = new OrderModel();
     private String newOrder;
@@ -53,10 +52,8 @@ public class OrderAction extends ActionSupport implements ModelDriven<OrderModel
                 this.message = "Oder Add fail... Food Are Not Awailable..";
             }
             HttpServletResponse response = ServletActionContext.getResponse();
-
             resMap.put("message", getMessage());
             String json = gson.toJson(resMap);
-
             response.setContentType("application/json");
             response.getWriter().write(json);
 
@@ -89,7 +86,7 @@ public class OrderAction extends ActionSupport implements ModelDriven<OrderModel
         }
         return SUCCESS;
     }
-    
+
     public String deleteOrderAdmin() {
         HttpServletResponse response = ServletActionContext.getResponse();
         Map resMap = new HashMap();
@@ -98,10 +95,8 @@ public class OrderAction extends ActionSupport implements ModelDriven<OrderModel
             if (OrderDao.deleteOrderById(orderModel.getId(), orderModel.getUserName(), DateTimeSetting.getCurrentDateTime())) {
                 List<FoodModel> foodList = FoodDao.getAllFoodListFor();
                 JsonArray allOrders = OrderDao.getAllOrdersForAdmin();
-            
                 resMap.put("food", foodList);
                 resMap.put("allOrders", allOrders);
-                
                 this.message = "Order Deelete Successfull...";
             } else {
                 this.message = "Order Deelete is Fail...";
@@ -115,7 +110,7 @@ public class OrderAction extends ActionSupport implements ModelDriven<OrderModel
         }
         return SUCCESS;
     }
-    
+
     public String sendOrder() {
         HttpServletResponse response = ServletActionContext.getResponse();
         Map resMap = new HashMap();
@@ -124,10 +119,8 @@ public class OrderAction extends ActionSupport implements ModelDriven<OrderModel
             if (OrderDao.sendOrder(orderModel.getId(), orderModel.getUserName(), DateTimeSetting.getCurrentDateTime())) {
                 List<FoodModel> foodList = FoodDao.getAllFoodListFor();
                 JsonArray allOrders = OrderDao.getAllOrdersForAdmin();
-            
                 resMap.put("food", foodList);
                 resMap.put("allOrders", allOrders);
-                
                 this.message = "Order Send Successfull...";
             } else {
                 this.message = "Order Send is Fail...";
@@ -150,7 +143,7 @@ public class OrderAction extends ActionSupport implements ModelDriven<OrderModel
             boolean valid = false;
             int fId = orderModel.getFoodId();
             System.out.println(fId);
-            if (FoodDao.getMaxOrdersByFoodId(fId) > (OrderDao.getAllOrdersByFoodId(fId) + Integer.parseInt(getNewOrder()) - orderModel.getQuantity()-1 )) {
+            if (FoodDao.getMaxOrdersByFoodId(fId) > (OrderDao.getAllOrdersByFoodId(fId) + Integer.parseInt(getNewOrder()) - orderModel.getQuantity() - 1)) {
                 valid = true;
             }
             if (valid) {
@@ -173,7 +166,7 @@ public class OrderAction extends ActionSupport implements ModelDriven<OrderModel
         } catch (Exception e) {
             this.message = e.toString();
         }
-            
+
         return SUCCESS;
     }
 
@@ -197,5 +190,5 @@ public class OrderAction extends ActionSupport implements ModelDriven<OrderModel
     public void setNewOrder(String newOrder) {
         this.newOrder = newOrder;
     }
-    
+
 }

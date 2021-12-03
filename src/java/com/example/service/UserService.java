@@ -23,6 +23,7 @@ public class UserService {
         }
         return res;
     }
+
     public String verifyLoginAdmin(UserModel uModel) throws Exception {
         String res;
 
@@ -38,7 +39,7 @@ public class UserService {
         }
         return res;
     }
-    
+
     public boolean verifyRegister(UserModel uModel) throws Exception {
 
         UserModel userModel = UserDao.getUserByUserName(uModel.getUserName());

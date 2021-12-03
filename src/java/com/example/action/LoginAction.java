@@ -1,5 +1,4 @@
 package com.example.action;
-
 import com.example.model.UserModel;
 import com.example.service.UserService;
 import com.opensymphony.xwork2.ActionContext;
@@ -31,14 +30,14 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserModel>
             UserService loginService = new UserService();
             try {
                 String res = loginService.verifyLogin(userModel);
-                if(res.equals("success")) {
-                        Map<String, Object> session = ActionContext.getContext().getSession();
-                        session.put("logName", userModel.getUserName());
-                        session.put("loger", "user");
-                        return SUCCESS;
-                }else{
+                if (res.equals("success")) {
+                    Map<String, Object> session = ActionContext.getContext().getSession();
+                    session.put("logName", userModel.getUserName());
+                    session.put("loger", "user");
+                    return SUCCESS;
+                } else {
                     String resAdmin = loginService.verifyLoginAdmin(userModel);
-                    if(resAdmin.equals("success")) {
+                    if (resAdmin.equals("success")) {
                         Map<String, Object> session = ActionContext.getContext().getSession();
                         session.put("logName", userModel.getUserName());
                         session.put("loger", "user");
@@ -53,87 +52,85 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserModel>
         }
         return LOGIN;
     }
-    public String userLogin(){
-        
-            UserService loginService = new UserService();
-            try {
-                String res = loginService.verifyLogin(uModel);
-                switch (res) {
-                    case "success":
-                        Map<String, Object> session = ActionContext.getContext().getSession();
-                        session.put("logName", uModel.getUserName());
-                        session.put("loger", "user");
-                        if (this.remember) {
-                            Cookie ckUserName = new Cookie("logName", uModel.getUserName());
-                            ckUserName.setMaxAge(3600);
-                            servletResponse.addCookie(ckUserName);
-                            Cookie ckPassword = new Cookie("password", uModel.getPassword());
-                            ckPassword.setMaxAge(3600);
-                            servletResponse.addCookie(ckPassword);
-                        }
-                        this.message = uModel.getUserName();
-                        return SUCCESS;
-                    case "NotPassword":
-                        this.message = "Password Not Match";
-                        break;
-                    case "NotUserName":
-                        this.message = "User Not Registered";
-                        break;
-                    default:
-                        break;
-                }
-            } catch (Exception e) {
-                this.message = e.toString();
+
+    public String userLogin() {
+        UserService loginService = new UserService();
+        try {
+            String res = loginService.verifyLogin(uModel);
+            switch (res) {
+                case "success":
+                    Map<String, Object> session = ActionContext.getContext().getSession();
+                    session.put("logName", uModel.getUserName());
+                    session.put("loger", "user");
+                    if (this.remember) {
+                        Cookie ckUserName = new Cookie("logName", uModel.getUserName());
+                        ckUserName.setMaxAge(3600);
+                        servletResponse.addCookie(ckUserName);
+                        Cookie ckPassword = new Cookie("password", uModel.getPassword());
+                        ckPassword.setMaxAge(3600);
+                        servletResponse.addCookie(ckPassword);
+                    }
+                    this.message = uModel.getUserName();
+                    return SUCCESS;
+                case "NotPassword":
+                    this.message = "Password Not Match";
+                    break;
+                case "NotUserName":
+                    this.message = "User Not Registered";
+                    break;
+                default:
+                    break;
             }
+        } catch (Exception e) {
+            this.message = e.toString();
+        }
         return LOGIN;
     }
 
-    public String adminLogin(){
-        
-            UserService loginService = new UserService();
-            try {
-                String res = loginService.verifyLoginAdmin(uModel);
-                switch (res) {
-                    case "success":
-                        Map<String, Object> session = ActionContext.getContext().getSession();
-                        session.put("logName", uModel.getUserName());
-                        session.put("loger", "admin");
-                        if (this.remember) {
-                            Cookie ckUserName = new Cookie("logName", uModel.getUserName());
-                            ckUserName.setMaxAge(3600);
-                            servletResponse.addCookie(ckUserName);
-                            Cookie ckPassword = new Cookie("password", uModel.getPassword());
-                            ckPassword.setMaxAge(3600);
-                            servletResponse.addCookie(ckPassword);
-                        }
-                        this.message = uModel.getUserName();
-                        return "admin";
-                    case "NotPassword":
-                        this.message = "Password Not Match";
-                        break;
-                    case "NotUserName":
-                        this.message = "Admin Not Registered";
-                        break;
-                    default:
-                        break;
-                }
-            } catch (Exception e) {
-                this.message = e.toString();
+    public String adminLogin() {
+        UserService loginService = new UserService();
+        try {
+            String res = loginService.verifyLoginAdmin(uModel);
+            switch (res) {
+                case "success":
+                    Map<String, Object> session = ActionContext.getContext().getSession();
+                    session.put("logName", uModel.getUserName());
+                    session.put("loger", "admin");
+                    if (this.remember) {
+                        Cookie ckUserName = new Cookie("logName", uModel.getUserName());
+                        ckUserName.setMaxAge(3600);
+                        servletResponse.addCookie(ckUserName);
+                        Cookie ckPassword = new Cookie("password", uModel.getPassword());
+                        ckPassword.setMaxAge(3600);
+                        servletResponse.addCookie(ckPassword);
+                    }
+                    this.message = uModel.getUserName();
+                    return "admin";
+                case "NotPassword":
+                    this.message = "Password Not Match";
+                    break;
+                case "NotUserName":
+                    this.message = "Admin Not Registered";
+                    break;
+                default:
+                    break;
             }
+        } catch (Exception e) {
+            this.message = e.toString();
+        }
         return LOGIN;
     }
-    
+
     public String login() {
         if (StringUtils.isEmpty(uModel.getUserName())) {
             addFieldError("userName", "User Name Cannot be Blank");
         }
         if (StringUtils.isEmpty(uModel.getPassword())) {
             addFieldError("password", "Password Cannot be Blank");
-        }else{
-
-            if(this.adminSwitch){
+        } else {
+            if (this.adminSwitch) {
                 return adminLogin();
-            }else{
+            } else {
                 return userLogin();
             }
         }
@@ -157,7 +154,7 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserModel>
         }
         return SUCCESS;
     }
-    
+
     private UserModel checkCookie() {
         UserModel userModel = null;
         String userName = "", password = "";

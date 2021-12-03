@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts  
 Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">  
 <struts>  
@@ -11,20 +10,16 @@ Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
             <result name="user" type="redirect">/userPage.jsp </result>  
             <result name="login">/login.jsp</result> 
         </action>
-        
         <action name="loginAcc" class="com.example.action.LoginAction" method="login">  
             <result name="success" type="redirect">/userPage.jsp</result> 
             <result name="admin" type="redirect">/adminPage.jsp</result>  
             <result name="login">/login.jsp</result> 
             <result name="input">login.jsp</result> 
         </action>  
-        
         <action name="logout" class="com.example.action.LoginAction" method="logout">  
             <result name="success">/login.jsp</result>  
         </action>
     </package>
-
-
 
     <package name="register" namespace="/" extends="struts-default">   
         <action name="register" class="com.example.action.RegisterAction">  
@@ -35,39 +30,32 @@ Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
     </package>
         
     <package name="userpage" namespace="/userPage" extends="struts-default"> 
-
         <action name="getUser" class="com.example.action.UserPageAction">  
             <result name="success" type="httpheader" > </result>
             <result name="login" type="redirect">/login.jsp</result>
             <result name="admin" type="redirect">/adminPage.jsp</result>
             <result name="error" type="redirect">/login.jsp</result>
-        </action> 
-        
+        </action>        
         <action name="getFoodItems" class="com.example.action.UserPageAction" method="getFoodItems">  
             <result name="success" type="httpheader" > </result>  
             <result name="error" >/error.jsp </result>
-        </action>  
-        
+        </action>            
         <action name="getOrders" class="com.example.action.UserPageAction" method="getOrders">  
             <result name="success" type="httpheader" > </result>  
             <result name="error" >/error.jsp </result>
-        </action>  
-        
+        </action>         
         <action name="getAllCustomers" class="com.example.action.UserPageAction" method="getAllCustomers">  
             <result name="success" type="httpheader" > </result>  
             <result name="error" >/error.jsp </result>
-        </action> 
-        
+        </action>        
         <action name="deleteUser" class="com.example.action.UserPageAction" method="deleteUser">  
             <result name="success" type="httpheader" > </result>  
             <result name="error" >/error.jsp </result>
-        </action> 
-        
+        </action>         
         <action name="getCustomerDetails" class="com.example.action.UserPageAction" method="getCustomerDetails">  
             <result name="success" type="httpheader" > </result>  
             <result name="error" type="redirect" >/error.jsp </result>
-        </action> 
-        
+        </action>        
         <action name="editUserDetails" class="com.example.action.UserPageAction" method="editUserDetails">  
             <result name="success" type="httpheader" > </result>  
             <result name="error" type="redirect" >/error.jsp </result>
@@ -75,83 +63,67 @@ Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
     </package>    
     
     <package name="adminpage" namespace="/adminPage" extends="struts-default"> 
-
         <action name="getAdmin" class="com.example.action.AdminPageAction">  
             <result name="success" type="httpheader" > </result>
             <result name="login" type="redirect">/login.jsp</result>
             <result name="user" type="redirect">/userPage.jsp</result>
             <result name="error" type="redirect">/login.jsp</result>
-        </action> 
-        
+        </action>       
         <action name="getFoodItems" class="com.example.action.AdminPageAction" method="getFoodItems">  
             <result name="success" type="httpheader" > </result>  
             <result name="error" >/error.jsp </result>
-        </action>
-        
+        </action>       
         <action name="editFoodItem" class="com.example.action.AdminPageAction" method="editFoodItem">  
             <result name="success" type="httpheader" > </result>  
             <result name="error" >/error.jsp </result>
-        </action>  
-        
+        </action>          
         <action name="getAllOrders" class="com.example.action.AdminPageAction" method="getAllOrders">  
             <result name="success" type="httpheader" > </result>  
             <result name="error" >/error.jsp </result>
-        </action> 
-        
+        </action>        
         <action name="addFoodItem" class="com.example.action.AdminPageAction" method="addFoodItem">  
             <result name="success" type="httpheader" > </result>  
             <result name="error" >/error.jsp </result>
-        </action> 
-        
+        </action>        
         <action name="deleteFood" class="com.example.action.AdminPageAction" method="deleteFood">  
             <result name="success" type="httpheader" > </result>  
             <result name="error" >/error.jsp </result>
-        </action> 
-        
+        </action>        
         <action name="getAllAdmin" class="com.example.action.AdminPageAction" method="getAllAdmin">  
             <result name="success" type="httpheader" > </result>  
             <result name="error" >/error.jsp </result>
-        </action>
-        
+        </action>       
         <action name="deleteAdmin" class="com.example.action.AdminPageAction" method="deleteAdmin">  
             <result name="success" type="httpheader" > </result>  
             <result name="error" >/error.jsp </result>
-        </action> 
-        
+        </action>        
         <action name="addNewAdmin" class="com.example.action.AdminPageAction" method="addNewAdmin">  
             <result name="success" type="httpheader" > </result>  
             <result name="error" >/error.jsp </result>
-        </action> 
-        
+        </action>        
         <action name="editAdminDetails" class="com.example.action.AdminPageAction" method="editAdminDetails">  
             <result name="success" type="httpheader" > </result>  
             <result name="error" >/error.jsp </result>
-        </action> 
-        
+        </action>        
     </package>
     
-    <package name="orderpage" namespace="/orderPage" extends="struts-default">  
-          
+    <package name="orderpage" namespace="/orderPage" extends="struts-default">            
         <action name="addNewOrder" class="com.example.action.OrderAction" method="addNewOrder">  
             <result name="success"  type="httpheader" > </result>  
             <result name="error" >/error.jsp </result>
-        </action>  
-        
+        </action>          
         <action name="getOrders" class="com.example.action.UserPageAction" method="getOrders">  
             <result name="success" type="httpheader" > </result>  
             <result name="error" >/error.jsp </result>
-        </action>  
-        
+        </action>          
         <action name="deleteOrder" class="com.example.action.OrderAction" method="deleteOrder">  
             <result name="success" type="httpheader" > </result> 
             <result name="error">/error.jsp </result> 
-        </action> 
-        
-         <action name="editOrder" class="com.example.action.OrderAction" method="editOrder">  
+        </action>        
+        <action name="editOrder" class="com.example.action.OrderAction" method="editOrder">  
             <result name="success" type="httpheader" > </result> 
             <result name="error">/error.jsp </result> 
-        </action>  
-        
+        </action>          
         <action name="deleteOrderAdmin" class="com.example.action.OrderAction" method="deleteOrderAdmin">  
             <result name="success" type="httpheader" > </result> 
             <result name="error">/error.jsp </result> 
@@ -159,8 +131,16 @@ Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
         <action name="sendOrder" class="com.example.action.OrderAction" method="sendOrder">  
             <result name="success" type="httpheader" > </result> 
             <result name="error">/error.jsp </result> 
-        </action>
-        
+        </action>       
     </package>  
+ 
+    <package name="user" namespace="/user" extends="struts-default, json-default"> 
+        <action name="getOrders" class="com.example.action.GridUserAction">  
+            <result name="success" type="json"> </result>  
+        </action>   
+        <action name="getEdit" class="com.example.action.GridUserAction" method="edit">  
+            <result name="success" type="json"> </result>  
+        </action> 
+    </package>
         
 </struts>   
